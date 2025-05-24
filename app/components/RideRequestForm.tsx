@@ -62,13 +62,6 @@ export default function RideRequestForm({ onSubmit }: RideRequestFormProps) {
     }
   };
 
-  // Options for Google Places Autocomplete
-  const autocompleteOptions = {
-    componentRestrictions: { country: 'in' }, // 'in' is the country code for India
-    types: ['geocode', 'establishment'], // This will return both addresses and places
-    fields: ['formatted_address', 'geometry', 'name']
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
@@ -79,9 +72,14 @@ export default function RideRequestForm({ onSubmit }: RideRequestFormProps) {
           <Autocomplete
             onLoad={(autocomplete) => {
               autocompleteRef.current = autocomplete;
+              // Set additional options after the component is loaded
+              autocomplete.setOptions({
+                types: ['geocode', 'establishment'],
+                fields: ['formatted_address', 'geometry', 'name']
+              });
             }}
             onPlaceChanged={handlePlaceSelect}
-            options={autocompleteOptions}
+            restrictions={{ country: 'in' }}
           >
             <input
               type="text"
