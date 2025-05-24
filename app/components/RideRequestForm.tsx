@@ -72,11 +72,9 @@ export default function RideRequestForm({ onSubmit }: RideRequestFormProps) {
           <Autocomplete
             onLoad={(autocomplete) => {
               autocompleteRef.current = autocomplete;
-              // Set additional options after the component is loaded
-              autocomplete.setOptions({
-                types: ['geocode', 'establishment'],
-                fields: ['formatted_address', 'geometry', 'name']
-              });
+              // Set additional options directly on the autocomplete instance
+              autocomplete.setTypes(['geocode', 'establishment']);
+              autocomplete.setFields(['formatted_address', 'geometry', 'name']);
             }}
             onPlaceChanged={handlePlaceSelect}
             restrictions={{ country: 'in' }}
